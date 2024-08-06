@@ -1,0 +1,1 @@
+docker run -it --rm --gpus all -v ./:/home/yolox-tensor:rw -e DISPLAY=$DISPLAY -v /tmp/.X11-unix/:/tmp/.X11-unix/ --ipc=host --network=host yolox-tensor
