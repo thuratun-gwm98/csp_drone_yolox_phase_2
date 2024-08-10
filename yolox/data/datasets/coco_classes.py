@@ -85,18 +85,22 @@
 #     "toothbrush",
 # )
 
-COCO_CLASSES = (
-    "flir-camera-objects",
-    "bicycle",
-    "car",
-    "dog",
-    "person",
-)
+# COCO_CLASSES = (
+#     "flir-camera-objects",
+#     "bicycle",
+#     "car",
+#     "dog",
+#     "person",
+# )
 
 # COCO_CLASSES = (
-#     "Person",
-#     "Car",
-#     "Bicycle",
-#     "OtherVehicle",
-#     "DontCare",
+#     "person",
+#     "car"
 # )
+
+COCO_CLASSES = (
+    "people",
+    "bicycle",
+    "car",
+    "motor"
+)
