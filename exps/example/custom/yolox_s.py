@@ -20,7 +20,7 @@ class Exp(MyExp):
 
         self.output_dir = "./YOLOX_outputs/hit_uav_150_eph"
 
-        self.num_classes = 5
+        self.num_classes = 4
 
         self.max_epoch = 150
         self.data_num_workers = 2
