@@ -18,16 +18,17 @@ class Exp(MyExp):
         self.data_dir = "./datasets/flir camera objects.v2-release.coco"
         self.train_ann = "train_annotations.coco.json"
         self.val_ann = "val_annotations.coco.json"
+        self.test_ann = ""
 
         self.output_dir = "./YOLOX_outputs/testing"
 
-        self.num_classes = 5
+        self.num_classes = 2
 
         self.max_epoch = 200
         self.data_num_workers = 2
 
-        self.input_size = (512, 512)
-        self.test_size = (512, 512)
+        self.input_size = (640, 640)
+        self.test_size = (640, 640)
 
         self.eval_interval = 5
         self.print_interval = 5
