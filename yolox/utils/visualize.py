@@ -9,7 +9,7 @@ __all__ = ["vis"]
 
 
 def vis(img, boxes, scores, cls_ids, conf=0.5, class_names=None):
-    box_count = []
+
     for i in range(len(boxes)):
         box = boxes[i]
         cls_id = int(cls_ids[i])
@@ -21,63 +21,24 @@ def vis(img, boxes, scores, cls_ids, conf=0.5, class_names=None):
         x1 = int(box[2])
         y1 = int(box[3])
 
-        box_count.append(x0)
-
-        COLOR_PALETTE = [
-        (0, 0, 255),  # Green (Medium)
-        (0, 255, 0),  # Light Red
-        (255, 0, 0),  # Blue (Medium-Light)
-        (255, 0, 255),  # Magenta
-        (0, 255, 255),  # Cyan
-        ]
-
-        # color = (_COLORS[cls_id] * 255).astype(np.uint8).tolist()
+        color = (_COLORS[cls_id] * 255).astype(np.uint8).tolist()
         text = '{}:{:.1f}%'.format(class_names[cls_id], score * 100)
-        # txt_color = (0, 0, 0) if np.mean(_COLORS[cls_id]) > 0.5 else (255, 255, 255)
-        color = COLOR_PALETTE[cls_id]
+        txt_color = (0, 0, 0) if np.mean(_COLORS[cls_id]) > 0.5 else (255, 255, 255)
         font = cv2.FONT_HERSHEY_SIMPLEX
 
         txt_size = cv2.getTextSize(text, font, 0.4, 1)[0]
         cv2.rectangle(img, (x0, y0), (x1, y1), color, 2)
 
-        area = (y1-y0) * (x1-x0)
-        areaRng = [
-            [0 ** 2, 32 ** 2],   # Small
-            [32 ** 2, 96 ** 2],  # Medium
-            [96 ** 2, 1e5 ** 2]  # Large
-        ]
-        
-        if areaRng[0][0] <= area < areaRng[0][1]:
-            area_size = "S"
-        elif areaRng[1][0] <= area < areaRng[1][1]:
-            area_size = "M"
-        elif areaRng[2][0] <= area <= areaRng[2][1]:
-            area_size = "L"
-        else:
-            area_size = "unknown"
+        txt_bk_color = (_COLORS[cls_id] * 255 * 0.7).astype(np.uint8).tolist()
+        cv2.rectangle(
+            img,
+            (x0, y0 + 1),
+            (x0 + txt_size[0] + 1, y0 + int(1.5*txt_size[1])),
+            txt_bk_color,
+            -1
+        )
+        cv2.putText(img, text, (x0, y0 + txt_size[1]), font, 0.4, txt_color, thickness=1)
 
-        # txt_bk_color = (_COLORS[cls_id] * 255 * 0.7).astype(np.uint8).tolist()
-        # txt_bk_color = CUSTOM_COLORS[cls_id]
-        # cv2.rectangle(
-        #     img,
-        #     (x0, y0 + 1),
-        #     (x0 + txt_size[0] + 1, y0 + int(1.5*txt_size[1])),
-        #     txt_bk_color,
-        #     -1
-        # )
-        
-        cv2.putText(img, text, (x0, y0 - 9), font, 0.4, color, thickness=1)
-        x_pos = int(x0+(x1-x0)/2)
-        cv2.putText(img, area_size, (x_pos, y1 + 9), font, 0.4, color, thickness=1)
-    
-    count = f"BoxCount: {str(len(box_count))}"
-    cv2.putText(img, count, 
-                    (10, int(img.shape[0]-20)), 
-                    font,
-                    0.4,
-                    (64, 0, 128),
-                    1,
-                )
     return img
 
 
@@ -165,15 +126,3 @@ _COLORS = np.array(
         0.50, 0.5, 0
     ]
 ).astype(np.float32).reshape(-1, 3)
-
-CUSTOM_COLORS = [
-    (255, 255, 0), # custom
-    (0, 255, 0), # custom
-    (0, 0, 255), # custom
-    (255, 0, 0), # custom
-    (127, 0, 255), # custom
-    (0, 0, 0),  # Black
-    (255, 255, 255),  # White
-    (128, 64, 192),  # Pink (Medium)
-    (64, 0, 64),  # Purple (Dark)
-]
