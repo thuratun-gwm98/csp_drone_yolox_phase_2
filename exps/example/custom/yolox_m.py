@@ -22,7 +22,7 @@ class Exp(MyExp):
 
         self.output_dir = "./YOLOX_outputs/testing"
 
-        self.num_classes = 80
+        self.num_classes = 2
 
         self.max_epoch = 200
         self.data_num_workers = 2
